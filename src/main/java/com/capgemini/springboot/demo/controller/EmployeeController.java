@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.springboot.demo.model.Employee;
 import com.capgemini.springboot.demo.service.EmployeeService;
 
 @RestController
+@RequestMapping("/emp")
 public class EmployeeController {
 
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
@@ -28,7 +30,7 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService service;
 
-//	http://localhost:8088/get-employee-by-id/102
+//	http://localhost:8088/emp/get-employee-by-id/102
 	/*
 	 * @GetMapping("/get-employee-by-id/{eid}") public Employee
 	 * getEmployeeById(@PathVariable(name="eid") int employeeId) { //int employeeId
@@ -47,7 +49,7 @@ public class EmployeeController {
 //	return response;
 //}
 
-//	http://localhost:8088/get-employee-by-id/{eid}
+//	http://localhost:8088/emp/get-employee-by-id/{eid}
 	@GetMapping("/get-employee-by-id/{eid}")
 	public ResponseEntity<Employee> getEmployeeById(@PathVariable(name = "eid") int employeeId) {
 	LOG.info("EmployeeController getEmployeeById " + employeeId);
@@ -99,6 +101,7 @@ public class EmployeeController {
 	@DeleteMapping("/delete-employee/{eid}")
 	public ResponseEntity<Employee> deleteEmployee(@PathVariable(name = "eid") int employeeId) {
 		LOG.info(Integer.toString(employeeId));
+		
 		Employee e= service.deleteEmp(employeeId);
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("message", "Employee deleted successfully.");

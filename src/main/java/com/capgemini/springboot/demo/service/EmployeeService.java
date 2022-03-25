@@ -63,6 +63,8 @@ public class EmployeeService {
 				empList.remove(e);
 			}
 		});
+		//System.out.println(emp.toString());
+		LOG.info(emp.toString());
 		return emp;
 	}
 	
