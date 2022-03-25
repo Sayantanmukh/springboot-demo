@@ -65,6 +65,16 @@ public class EmployeeService {
 		});
 		return emp;
 	}
+	
+//	}
+//	public List<Employee> deleteEmp(int employeeId) {
+//		Employee emp = this.getEmpById(employeeId);
+//		if(emp!=null) {
+//			empList.remove(emp);
+//			return empList;
+//		}
+//		return null;
+//	}
 }
 
 //package com.capgemini.springboot.demo.service;
