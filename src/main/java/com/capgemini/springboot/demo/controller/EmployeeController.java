@@ -73,20 +73,37 @@ public class EmployeeController {
 	}
 
 	@PostMapping("/add-employee")
-	public Employee addEmployee(@RequestBody Employee employee ) {
+	public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee ) {
 		//Employee employee = new Employee();
 		LOG.info(employee.toString());
-		return service.addEmp(employee);
+		Employee e= service.addEmp(employee);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("message", "Employee added successfully.");
+		ResponseEntity<Employee> response = new ResponseEntity<>(e, headers, HttpStatus.OK);
+		return response;
+		
 	}
 	
 	@PutMapping("/update-employee")
-	public Employee updateEmployee() {
-		return null;
+	public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee) {
+		LOG.info(employee.toString());
+		Employee e= service.updateEmp(employee);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("message", "Employee updated successfully.");
+		ResponseEntity<Employee> response = new ResponseEntity<>(e, headers, HttpStatus.OK);
+		return response;
+		
 	}
-	
+
+//	http://localhost:8088/delete-employee/{eid} 
 	@DeleteMapping("/delete-employee/{eid}")
-	public Employee deleteEmployee(@PathVariable(name="eid") int employeeId ) {
-		return null;
+	public ResponseEntity<Employee> deleteEmployee(@PathVariable(name = "eid") int employeeId) {
+		LOG.info(Integer.toString(employeeId));
+		Employee e= service.deleteEmp(employeeId);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("message", "Employee deleted successfully.");
+		ResponseEntity<Employee> response = new ResponseEntity<>(e, headers, HttpStatus.OK);
+		return response;
 	}
 
 }
