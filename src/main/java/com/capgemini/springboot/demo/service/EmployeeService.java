@@ -38,8 +38,8 @@ public class EmployeeService {
 
 	public List<Employee> getAllEmps() {
 		LOG.info("EmployeeService getAllEmps");
-		LOG.warn("EmployeeService getAllEmps");
-		LOG.error("EmployeeService getAllEmps");
+//		LOG.warn("EmployeeService getAllEmps");
+//		LOG.error("EmployeeService getAllEmps");
 		return empList;
 	}
 

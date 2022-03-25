@@ -1,14 +1,19 @@
 package com.capgemini.springboot.demo.controller;
 
 import java.util.List;
-import java.util.Random;
+//import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,18 +29,47 @@ public class EmployeeController {
 	private EmployeeService service;
 
 //	http://localhost:8088/get-employee-by-id/102
-	@GetMapping("/get-employee-by-id/{eid}")
-	public Employee getEmployeeById(@PathVariable(name="eid") int employeeId) {
-		//int employeeId = new Random().nextInt(6) + 100;
-		LOG.info("EmployeeController getEmployeeById " + employeeId);
-		return service.getEmpById(employeeId);
-	}
+	/*
+	 * @GetMapping("/get-employee-by-id/{eid}") public Employee
+	 * getEmployeeById(@PathVariable(name="eid") int employeeId) { //int employeeId
+	 * = new Random().nextInt(6) + 100;
+	 * LOG.info("EmployeeController getEmployeeById " + employeeId); return
+	 * service.getEmpById(employeeId); }
+	 */
 
+	
+////http://localhost:8088/get-employee-by-id/{eid}
+//@GetMapping("/get-employee-by-id/{eid}")
+//public ResponseEntity<Employee> getEmployeeById(@PathVariable(name = "eid") int employeeId) {
+//	LOG.info("EmployeeController getEmployeeById " + employeeId);
+//	Employee emp = service.getEmpById(employeeId);
+//	ResponseEntity<Employee> response = new ResponseEntity<>(emp, HttpStatus.OK);
+//	return response;
+//}
+
+//	http://localhost:8088/get-employee-by-id/{eid}
+	@GetMapping("/get-employee-by-id/{eid}")
+	public ResponseEntity<Employee> getEmployeeById(@PathVariable(name = "eid") int employeeId) {
+	LOG.info("EmployeeController getEmployeeById " + employeeId);
+	Employee emp = service.getEmpById(employeeId);
+	HttpHeaders headers = new HttpHeaders();
+	headers.add("message", "Employee " + employeeId + " was found successfully.");
+	ResponseEntity<Employee> response = new ResponseEntity<>(emp, headers, HttpStatus.OK);
+	return response;
+}
+	
+	
 //	http://localhost:8088/get-all-employees
 	@GetMapping("/get-all-employees")
-	public List<Employee> getAllEmployees() {
+	public ResponseEntity<List<Employee>>  getAllEmployees() {
 		LOG.info("get-all-employees");
-		return service.getAllEmps();
+		List<Employee> e= service.getAllEmps();
+		HttpHeaders headers = new HttpHeaders();
+		//headers.add("message", "Employee " + employeeId + " was found successfully.");
+		headers.add("message", "Employee details shown successfully.");
+		ResponseEntity<List<Employee>> response = new ResponseEntity<>(e, headers, HttpStatus.OK);
+		return response;
+		
 	}
 
 	@PostMapping("/add-employee")
@@ -44,12 +78,14 @@ public class EmployeeController {
 		LOG.info(employee.toString());
 		return service.addEmp(employee);
 	}
-
+	
+	@PutMapping("/update-employee")
 	public Employee updateEmployee() {
 		return null;
 	}
 	
-	public Employee deleteEmployee() {
+	@DeleteMapping("/delete-employee/{eid}")
+	public Employee deleteEmployee(@PathVariable(name="eid") int employeeId ) {
 		return null;
 	}
 
