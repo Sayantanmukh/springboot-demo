@@ -13,3 +13,4 @@
 2022-03-25 12:37:25.073  INFO 14068 --- [http-nio-8088-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
 2022-03-25 12:37:33.892  INFO 14068 --- [http-nio-8088-exec-2] c.c.s.d.controller.EmployeeController    : get-all-employees
 2022-03-25 12:37:33.892  INFO 14068 --- [http-nio-8088-exec-2] c.c.s.demo.service.EmployeeService       : EmployeeService getAllEmps
+2022-03-25 15:44:52.098  INFO 14068 --- [RMI TCP Connection(198)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
