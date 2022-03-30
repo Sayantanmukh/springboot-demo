@@ -5,9 +5,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,11 +46,14 @@ public class AppUserController implements IAppUserController {
 	@PostMapping("/login")
 	public ResponseEntity<AppUser> login(@RequestBody AppUser appUser) {
 		LOG.info(appUser.toString());
-		return new ResponseEntity<AppUser>(appUserService.loginUser(appUser), HttpStatus.CREATED);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("message", "User " + appUser.getUserName() + " logged in successfully.");
+		return new ResponseEntity<AppUser>(appUserService.loginUser(appUser), headers, HttpStatus.OK);
 	}
 
 	@Override
-	public ResponseEntity<String> logout(String userName) {
+	@GetMapping("/logout/{user}")
+	public ResponseEntity<String> logout(@PathVariable(name = "user") String userName) {
 		LOG.info(userName);
 		return new ResponseEntity<String>(appUserService.logoutUser(userName), HttpStatus.OK);
 	}
@@ -61,5 +64,4 @@ public class AppUserController implements IAppUserController {
 		LOG.info(appUser.toString());
 		return new ResponseEntity<AppUser>(appUserService.updateUser(appUser), HttpStatus.OK);
 	}
-
 }
